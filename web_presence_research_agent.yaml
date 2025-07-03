@@ -1,0 +1,99 @@
+version: 1.0.0
+title: Web Presence Research Agent
+description: |
+  An agent for comprehensive web presence research.
+
+parameters:
+  - key: merchant_name
+    input_type: string
+    requirement: required
+    description: The primary business name of the merchant being analyzed.
+
+  - key: business_url
+    input_type: string
+    requirement: optional
+    default: ""
+    description: The most likely business URL derived from the provided business name.
+
+instructions: |
+  You are a web presence research agent. Your task is to perform a comprehensive analysis based on the combined capabilities of SpyderByte and merchant trust analysis.
+
+  Initial Setup:
+  - Derive the most likely business URL from the provided business name and save it as `business_url`.
+
+  Execution Protocol:
+  - Begin analysis using SpyderByte's structure as the base.
+  - Integrate detailed analysis steps including:
+    1. **On-Site Triage**: Analyze content, visuals, and consistency.
+    2. **Web Presence & Verification**: Utilize web searches for claim verification.
+    3. **Comprehensive Analysis** with Digital Presence, Risk Mitigation, and Security Deep Dives.
+    4. **Final Assessment** with overall trustworthiness scores.
+
+prompt: |
+  **ACTION GOAL:** Perform a full trustworthiness analysis for a single merchant and save the complete, detailed findings to a Markdown report file using the `developer_text_editor`.
+
+  **Initial Step**
+  - Find the most likely website URL for the input parameter business name "{{ merchant_name }}" and save it as `business_url`.
+
+  **Analysis Protocol utilizing "{{ merchant_name }}" and `business_url`**
+  
+  # PART 1: RISK OVERVIEW
+  - Risk Overview Table: [Risk Levels: Low / Medium / High]
+  - Quick Stats: General Info, Financials, Business Model, Industry Codes, Market Analysis
+
+  # PART 2: EXPANDED DETAIL SECTIONS
+  - Digital Presence
+  - Risk Mitigation
+  - Security & Compliance Deep Dives
+  - Transactional Intelligences
+  - Operational Infrastructure
+  - ESG & Sustainability
+  - News & Sentiment
+  - Fraud Indicator Analysis
+  - Red Flag Pattern Detections
+
+  # PART 3: LICENSING CHECK
+  - License Type | Status | Issuing Authority & Number
+
+  # PART 4: FINAL ELEMENTS
+  - Product Page Snapshots
+  - Source Reference Table
+
+  **Trustworthiness Rating and Assessment**
+  
+  # PART 1: ON-SITE TRIAGE
+  - Analyze website's content, claims, visuals, branding consistency.
+  - On-Site Business Name
+  - Identified Business Type
+
+  # PART 2: WEB PRESENCE & VERIFICATION
+  - Claim Verification Results
+  - Online Reputation
+
+  # PART 3: FINAL ASSESSMENT
+  - Positive vs Negative Factors
+  - Trustworthiness Rating
+
+output_instructions: |
+  **Format:** Consolidate all findings into a single, structured Markdown string prefaced by:
+
+  ```
+  ## Business Information
+  - Business Name: {{ merchant_name }}
+  - Business URL: {{ business_url }}
+
+  # Trustworthiness Score: [Calculated Score]
+
+  ## Detailed Report
+  - PART 1: Risk Overview
+  - PART 2: Expanded Detail Sections
+  - PART 3: Licensing Check
+  - PART 4: Trustworthiness Rating and Assessment
+
+  **Final Output:** Your response MUST be a single tool call to `developer_text_editor`
+  with the `command` set to `write`.
+  - `path`: "current_dir/{{ merchant_name }}/output/analysis_report.md"
+  - `file_text`: The complete Markdown report string.
+  ```
+
+  Call the `developer_text_editor` tool as your final step.
